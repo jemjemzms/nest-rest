@@ -16,12 +16,12 @@ export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Get()
-  async findAll(): Promise<Item[]> {
+  findAll(): Promise<Item[]> {
     return this.itemsService.findAll();
   }
 
   @Get(":id")
-  async findOne(@Param("id") id): Promise<Item> {
+  findOne(@Param("id") id): Promise<Item> {
     return this.itemsService.findOne(id);
   }
 
@@ -36,7 +36,7 @@ export class ItemsController {
   }
 
   @Put(":id")
-  update(@Body() updateItemDto: CreateItemDto, @Param("id") id): string {
-    return `Update ${id} - Name: ${updateItemDto.name}`;
+  update(@Body() updateItemDto: CreateItemDto, @Param("id") id): Promise<Item> {
+    return this.itemsService.update(id, updateItemDto);
   }
 }
